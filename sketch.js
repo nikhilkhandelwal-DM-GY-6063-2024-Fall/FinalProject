@@ -1,5 +1,8 @@
 let mSerial; // Serial port object
 let connectButton;
+let explosionSound;
+let songb; // Background music
+let amplitude; // Amplitude analyzer
 
 let playerX, playerY;
 let playerWidth = 50, playerHeight = 20;
@@ -10,6 +13,11 @@ let gameOver = false;
 let fallSpeed = 3; // Initial falling speed
 let difficultyIncrement = 0.05;
 let readyToReceive = false;
+
+function preload() {
+  explosionSound = loadSound('explosion.mp3'); // Load explosion sound
+  songb = loadSound('songb.mp3'); // Load background music
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -30,6 +38,12 @@ function setup() {
   setInterval(() => {
     if (!gameOver) fallingObjects.push(createRandomObject());
   }, 1000);
+
+  // Setup amplitude analyzer
+  amplitude = new p5.Amplitude();
+
+  // Play background music when game starts
+  songb.loop();
 }
 
 function draw() {
@@ -59,10 +73,15 @@ function playGame() {
   fill(0, 255, 0);
   rect(playerX, playerY, playerWidth, playerHeight);
 
+  // Get audio level (amplitude)
+  let level = amplitude.getLevel();
+  let objSize = map(level, 0, 1, 30, 100); // Map peaks to object size range
+
   // Update and draw falling objects
   for (let i = fallingObjects.length - 1; i >= 0; i--) {
     let obj = fallingObjects[i];
     obj.y += fallSpeed;
+    obj.size = objSize; // Adjust size dynamically based on audio peaks
 
     drawShape(obj);
 
@@ -74,6 +93,8 @@ function playGame() {
       obj.y + obj.size > playerY
     ) {
       gameOver = true;
+      songb.stop(); // Stop the song when game over
+      explosionSound.play();
       if (score > highScore) highScore = score;
     }
 
@@ -122,7 +143,7 @@ function createRandomObject() {
   return {
     x: random(0, width - 40),
     y: 0,
-    size: random(30, 50),
+    size: 50, // Initial size
     type: random(shapes),
     color: color(random(100, 255), random(100, 255), random(100, 255)),
   };
@@ -157,4 +178,8 @@ function resetGame() {
   fallingObjects = [];
   gameOver = false;
   playerX = width / 2;
+
+  // Restart background music
+  songb.stop(); // Stop the music first
+  songb.loop(); // Restart the music
 }
