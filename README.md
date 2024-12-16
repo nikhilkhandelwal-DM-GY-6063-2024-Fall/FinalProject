@@ -258,3 +258,122 @@ The current version demonstrates:
 - Responsive design and restart functionality.
 
 ---
+
+# Milestone 4 - Final Project: Arduino and p5.js Interactive Game
+
+## Table of Contents
+- [Overview](#overview)
+- [System Diagram](#system-diagram)
+- [FSM Diagram](#fsm-diagram)
+- [Circuit Diagram](#circuit-diagram)
+- [Components Used](#components-used)
+- [External Libraries](#external-libraries)
+- [Project Relevance](#project-relevance)
+- [User Testing Feedback](#user-testing-feedback)
+- [Video Demonstration](#video-demonstration)
+- [Code Structure](#code-structure)
+
+---
+
+## Overview
+This interactive project combines **Arduino** for physical input and **p5.js** for a visual experience to create a simple yet challenging game. Players use hardware buttons to move a player-controlled rectangle on the screen to avoid falling objects. The difficulty increases as the game progresses, with an audio-reactive component adjusting object sizes dynamically.
+
+---
+
+## Finite State Machine Diagram
+        +-------------------+         
+        |    GAME START     |         
+        +-------------------+         
+                   |                  
+                   v                  
+        +-------------------+         
+        |   PLAYING STATE   |         
+        |   - Move Player   |         
+        |   - Generate Obj  |         
+        +-------------------+         
+                   |                  
+      Collision Detected              
+                   |                  
+                   v                  
+        +-------------------+         
+        |   GAME OVER       |         
+        |   - Display Score |         
+        +-------------------+         
+                   |                  
+        Restart Button Pressed        
+                   |                  
+                   v                  
+        +-------------------+         
+        |   RESET GAME      |         
+        +-------------------+         
+
+
+
+---
+
+## Circuit Diagram
+The buttons are connected as follows:
+- **Left Button** → Pin 2
+- **Right Button** → Pin 3
+- **Restart Button** → Pin 4
+
+![Circuit Diagram](circuit_final.png)
+
+---
+
+## Components Used
+1. **Arduino Nano** (or compatible)
+2. **Push Buttons** (3 buttons for Left, Right, Restart)
+3. **Resistors** (10k ohm for pull-up)
+4. **Laptop** for p5.js display and audio output.
+
+---
+
+## External Libraries
+1. **p5.Serial**: Enables communication between Arduino and p5.js.
+2. **p5.Sound**: Used for background music and sound effects.
+3. **p5.Image**: Handles image loading for the background.
+
+---
+
+## Project Relevance
+
+### Relation to Readings
+This project demonstrates the principles of **interactivity** and **feedback loops** discussed in class. By using serial communication and combining physical input with dynamic visuals/audio, it integrates real-world interaction into a digital experience.
+
+### Societal Connection
+The game explores the relationship between **reaction time** and **audio stimuli**, reflecting real-world scenarios like focus training for ADHD patients. It highlights the importance of integrating physical and digital components for engaging experiences.
+
+### Personal Importance
+This project resonates with my interest in creating **immersive experiences** and bridging the gap between hardware and software. It allowed me to showcase my technical and creative growth in the course.
+
+---
+
+## User Testing Feedback
+User testing revealed the following insights:
+1. **Positive**: Users enjoyed the increasing difficulty and audio-reactive visuals.
+2. **Improvement**: Added a "Restart Button" for convenience after feedback.
+3. **Gameplay Adjustments**: Balanced object speed and collision detection.
+
+---
+
+## Video Demonstration
+[Link to Project Video](#)
+
+---
+
+## Code Structure
+
+### Arduino Code
+The Arduino reads button inputs and sends **LEFT**, **RIGHT**, or **RESTART** commands via the serial port to the p5.js sketch.
+
+### p5.js Code
+The p5.js sketch handles visual rendering, sound effects, and serial communication to control the player and game state. (File: p5_game.js)
+
+---
+
+## Final Thoughts
+This project successfully demonstrates an integration of physical inputs (Arduino) and visual/audio outputs (p5.js), adhering to the course requirements while pushing creative and technical boundaries.
+
+---
+
