@@ -1,23 +1,25 @@
 const int leftButton = 2;  // Pin for Left button
 const int rightButton = 3; // Pin for Right button
+const int restartButton = 4;
 
 void setup() {
-  pinMode(leftButton, INPUT_PULLUP);  // Enable internal pull-up for Left button
-  pinMode(rightButton, INPUT_PULLUP); // Enable internal pull-up for Right button
+  pinMode(leftButton, INPUT_PULLUP);  // Enable internal pull-up resistor
+  pinMode(rightButton, INPUT_PULLUP);// Enable internal pull-up resistor
+  pinMode(restartButton, INPUT_PULLUP);
   Serial.begin(9600);                 // Start serial communication
 }
 
 void loop() {
-  // Check if Left button is pressed (LOW state)
-  if (digitalRead(leftButton) == LOW) {
+  if (digitalRead(leftButton) == LOW) { // Button pressed (LOW)
     Serial.println("LEFT");
-    delay(50); // Small delay for smooth control
+    delay(50); // Debounce delay
   }
-  
-  // Check if Right button is pressed (LOW state)
-  if (digitalRead(rightButton) == LOW) {
+  if (digitalRead(rightButton) == LOW) { // Button pressed (LOW)
     Serial.println("RIGHT");
-    delay(50); // Small delay for smooth control
+    delay(50); // Debounce delay
+  }
+  if (digitalRead(restartButton) == LOW) { // Button pressed (LOW)
+    Serial.println("RESTART");
+    delay(200); // Debounce delaay
   }
 }
-

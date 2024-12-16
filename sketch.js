@@ -92,11 +92,13 @@ function receiveSerial() {
   let mLine = mSerial.readUntil("\n");
   let command = mLine.trim();
 
-  // Update player position based on received serial data
+  // Update player position or restart based on received serial data
   if (command === "LEFT") {
     playerX = max(0, playerX - 20);
   } else if (command === "RIGHT") {
     playerX = min(width - playerWidth, playerX + 20);
+  } else if (command === "RESTART") {
+    resetGame(); // Restart the game
   }
 
   readyToReceive = true;
@@ -146,13 +148,7 @@ function gameOverScreen() {
   text("Game Over!", width / 2 - 100, height / 2);
   text(`Final Score: ${score}`, width / 2 - 100, height / 2 + 40);
   text(`High Score: ${highScore}`, width / 2 - 100, height / 2 + 80);
-  text("Press 'R' to Restart", width / 2 - 120, height / 2 + 120);
-}
-
-function keyPressed() {
-  if (key === 'R' || key === 'r') resetGame();
-  if (keyCode === LEFT_ARROW) playerX = max(0, playerX - 20);
-  if (keyCode === RIGHT_ARROW) playerX = min(width - playerWidth, playerX + 20);
+  text("Press 'Restart Button' to Restart", width / 2 - 200, height / 2 + 120);
 }
 
 function resetGame() {
@@ -161,8 +157,4 @@ function resetGame() {
   fallingObjects = [];
   gameOver = false;
   playerX = width / 2;
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
 }
