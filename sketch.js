@@ -3,6 +3,7 @@ let connectButton;
 let explosionSound;
 let songb; // Background music
 let amplitude; // Amplitude analyzer
+let bgImage;
 
 let playerX, playerY;
 let playerWidth = 50, playerHeight = 20;
@@ -17,6 +18,7 @@ let readyToReceive = false;
 function preload() {
   explosionSound = loadSound('explosion.mp3'); // Load explosion sound
   songb = loadSound('songb.mp3'); // Load background music
+  bgImage = loadImage('bg.jpeg');
 }
 
 function setup() {
@@ -34,20 +36,20 @@ function setup() {
   playerX = width / 2;
   playerY = height - 60;
 
+  // Setup amplitude analyzer
+  amplitude = new p5.Amplitude();
+
   // Generate falling objects at intervals
   setInterval(() => {
     if (!gameOver) fallingObjects.push(createRandomObject());
   }, 1000);
 
-  // Setup amplitude analyzer
-  amplitude = new p5.Amplitude();
-
-  // Play background music when game starts
-  songb.loop();
+  // Start background music immediately and reset amplitude
+  startBackgroundMusic();
 }
 
 function draw() {
-  background(0);
+  image(bgImage, 0, 0, width, height);
 
   // Attempt serial communication if connected
   if (mSerial.opened() && readyToReceive) {
@@ -66,6 +68,13 @@ function draw() {
   } else {
     gameOverScreen();
   }
+}
+
+function startBackgroundMusic() {
+  if (songb.isPlaying()) songb.stop(); // Stop if already playing
+  songb.jump(0); // Start the song from the beginning
+  songb.loop(); // Loop the music
+  amplitude.setInput(songb); // Reset amplitude analyzer with new input
 }
 
 function playGame() {
@@ -179,7 +188,6 @@ function resetGame() {
   gameOver = false;
   playerX = width / 2;
 
-  // Restart background music
-  songb.stop(); // Stop the music first
-  songb.loop(); // Restart the music
+  // Restart background music and amplitude analysis
+  startBackgroundMusic();
 }
