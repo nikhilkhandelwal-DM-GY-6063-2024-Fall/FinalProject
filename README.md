@@ -2,7 +2,6 @@
 
 ## Table of Contents
 - [Overview](#overview)
-- [System Diagram](#system-diagram)
 - [FSM Diagram](#fsm-diagram)
 - [Circuit Diagram](#circuit-diagram)
 - [Components Used](#components-used)
@@ -96,7 +95,7 @@ User testing revealed the following insights:
 ---
 
 ## Video Demonstration
-[Link to Project Video](#)
+[Link to Project Video](https://github.com/nikhilkhandelwal-DM-GY-6063-2024-Fall/FinalProject/blob/main/final_project.MOV)
 
 ---
 
